@@ -31,6 +31,6 @@ The refactoring action performs the following changes:
     *   Replaces the `<index-sort-as>` element with a `<sort-as>` element.
     *   Removes the `<itemgroup>` element.
     *   Moves the contents of the `<titlealts>` element inside the `<prolog>`.
-    *   Removes the `@domains` element.
+    *   Removes the `@domains` attribute.
     *   Renames `<sectiondiv>` to `<div>`.
     *   Remove `@query` attribute from `<link>` element.
