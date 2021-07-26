@@ -8,7 +8,7 @@
         <xt:oxy_version>21.0+</xt:oxy_version>
         <xt:type>plugin</xt:type>
         <xt:author>Oxygen XML Editor</xt:author>
-        <xt:name>Convert DITA 1.3 maps and topics to the DITA 2.x standard.</xt:name>
+        <xt:name>DITA 1.3 to DITA 2.x Converter</xt:name>
       <xt:description xmlns="http://www.w3.org/1999/xhtml">Convert DITA 1.3 maps and topics to the DITA 2.x standard.</xt:description>
         <xt:license>
 <![CDATA[
