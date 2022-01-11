@@ -236,6 +236,18 @@
 		<xsl:apply-templates select="node()"/>
 	</xsl:template>
 	
+	<!-- Move shortdesc before titlealts before converting it to a prolog -->
+	<xsl:template match="*[title][titlealts][shortdesc][not(prolog)]">
+		<xsl:copy>
+			<xsl:apply-templates select="@*"/>
+			<xsl:apply-templates select="node()[following-sibling::titlealts]"/>
+			<xsl:apply-templates select="shortdesc"/>
+			<xsl:apply-templates select="titlealts"/>
+			<xsl:apply-templates select="node()[preceding-sibling::shortdesc]"/>
+		</xsl:copy>
+	</xsl:template>
+	
+	
 	<!--Element removed in DITA 2.0, move its contents to the prolog element-->
 	<xsl:template match="titlealts[following-sibling::prolog]">
 		<xsl:message>The element 'titlealts' is removed in the DITA 2.0 standard. Moving its contents to 'prolog'.</xsl:message>
@@ -252,7 +264,7 @@
 	</xsl:template>
 	<xsl:template match="titlealts[not(following-sibling::prolog)]">
 		<!-- Convert to prolog -->
-		<xsl:message>The element 'titlealts' is removed in the DITA 2.0 standard.</xsl:message>
+		<xsl:message>The element 'titlealts' is removed in the DITA 2.0 standard. Converting to 'prolog'.</xsl:message>
 		<prolog>
 			<xsl:apply-templates select="@* | node()"/>
 		</prolog>
