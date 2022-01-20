@@ -17,11 +17,13 @@ The refactoring action performs the following changes:
 *   DITA Map changes:
     *   Removes the `@lockmeta` attribute.
     *   Removes the `<topicset>` and `<topicsetref>` elements.
+    *   Removes the `<anchor>` and `<anchorref>` elements and the `@anchorref` attribute.
     *   Migrates the `@navtitle` attribute as a `<navtitle>` element.
     *   Migrates the `@title` attribute as a `<title>` element.
     *   Converts the `@copy-to` attribute to a `<resourceid>` element.
     *   Replaces the `@print` attribute with an `@deliveryTarget` attribute.
     *   Convert topicmeta `<linktext>` to `<linktitle>`
+    *   Removed hasInstance, hasKind, hasNarrower, hasPart, hasRelated, and relatedSubjects from subject scheme relationship tables in subject scheme, including subjectRelTable, subjectRelHeader, subjectRel, and subjectRole
 *   DITA task changes:
     *   Converts the `<substep>` element to a `<step>` element.
     *   Converts the `<substeps>` element to a `<steps>` element.
@@ -34,3 +36,5 @@ The refactoring action performs the following changes:
     *   Removes the `@domains` attribute.
     *   Renames `<sectiondiv>` to `<div>`.
     *   Remove `@query` attribute from `<link>` element.
+    *   Remove `@specentry` attribute from `<stentry>` element.
+    *   Remove the `@spectitle` attribute.
