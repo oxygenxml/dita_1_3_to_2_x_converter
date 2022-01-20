@@ -85,15 +85,22 @@
 		<xsl:message>XML Schema based topics and maps are no longer supported</xsl:message>
 	</xsl:template>
 	
-	<!-- Attribute removed from 2.0 standard -->
-	<xsl:template match="@lockmeta">
-		<xsl:message>The attribute 'lockmeta' is removed in the DITA 2.0 standard.</xsl:message>
+	<!-- Elements removed in DITA 2.0. Unwrap. -->
+	<xsl:template match="titlealts|itemgroup|topicset|topicsetref">
+		<xsl:message>The element '<xsl:value-of select="name()"/>' is removed in the DITA 2.0 standard.</xsl:message>
+		<xsl:apply-templates select="node()"/>
 	</xsl:template>
 	
-	<!-- Elements removed from 2.0 standard. -->
-	<xsl:template match="topicset|topicsetref">
-		<xsl:message>The elements 'topicset' and 'topicsetref' are removed in the DITA 2.0 standard.</xsl:message>
-		<xsl:apply-templates select="node()"/>
+	<!-- Elements removed in DITA 2.0. Remove completely. -->
+	<xsl:template match="longquoteref|anchor|anchorref
+		|hasInstance|hasKind|hasNarrower|hasPart|hasRelated|relatedSubjects
+		|subjectRelTable|subjectRelHeader|subjectRel|subjectRole">
+		<xsl:message>The element '<xsl:value-of select="name()"/>' is removed in the DITA 2.0 standard.</xsl:message>
+	</xsl:template>
+	
+	<!--Attributes removed in DITA 2.0-->
+	<xsl:template match="@mapkeyref|link/@query|hazardsymbol/@longdescref|@domains|@xtrf|@xtrc|@copy-to|@lockmeta|@navtitle|@spectitle|@specentry">
+		<xsl:message>The attribute '<xsl:value-of select="name()"/>' is removed in the DITA 2.0 standard.</xsl:message>
 	</xsl:template>
 	
 	<xsl:function name="oxy:generateResourceID">
@@ -127,13 +134,9 @@
 	</xsl:template>
 	
 	<!-- Removed navtitle attribute from topicref, try to add it as child of topicmeta -->
-	<xsl:template match="@navtitle"/>
-	
 	<!-- Attribute removed in 2.0 standard 
 	https://lists.oasis-open.org/archives/dita/202105/msg00001.html-->
 	<!-- Replaced copy-to attribute with resourceid element -->
-	<xsl:template match="@copy-to"/>
-	
 	<xsl:template match="*[@navtitle or @copy-to][not(topicmeta)]">
 		<xsl:copy>
 			<xsl:apply-templates select="@* except @navtitle"/>
@@ -189,15 +192,6 @@
 		</xsl:choose>
 	</xsl:template>
 	
-	<!-- Removed in DITA 2.0 -->
-	<xsl:template match="@xtrf|@xtrc|@domains"/>
-	
-	<xsl:template match="node() | @*">
-		<xsl:copy>
-			<xsl:apply-templates select="node() | @*"/>
-		</xsl:copy>
-	</xsl:template>
-	
 	<!-- Removed task substep -->
 	<xsl:template match="substep">
 		<xsl:element name="step">
@@ -219,23 +213,6 @@
 		</xsl:element>
 	</xsl:template>
 	
-	<!-- This is replaced by @specializations which has a different syntax-->
-	<xsl:template match="@domains">
-		<xsl:message>The attribute 'domains' is removed in the DITA 2.0 standard.</xsl:message>
-	</xsl:template>
-	
-	<!-- Removed in DITA 2.0. Needs to be converted to something else probably. For now unwrap -->
-	<xsl:template match="titlealts">
-		<xsl:message>The element 'titlealts' is removed in the DITA 2.0 standard.</xsl:message>
-		<xsl:apply-templates select="node()"/>
-	</xsl:template>
-	
-	<!-- This elements seems to have been removed as well from DITA 2.0. And we seem to use it in the Oxygen user's guide. -->
-	<xsl:template match="itemgroup">
-		<xsl:message>The element 'itemgroup' is removed in the DITA 2.0 standard.</xsl:message>
-		<xsl:apply-templates select="node()"/>
-	</xsl:template>
-	
 	<!-- Move shortdesc before titlealts before converting it to a prolog -->
 	<xsl:template match="*[title][titlealts][shortdesc][not(prolog)]">
 		<xsl:copy>
@@ -246,7 +223,6 @@
 			<xsl:apply-templates select="node()[preceding-sibling::shortdesc]"/>
 		</xsl:copy>
 	</xsl:template>
-	
 	
 	<!--Element removed in DITA 2.0, move its contents to the prolog element-->
 	<xsl:template match="titlealts[following-sibling::prolog]">
@@ -287,9 +263,6 @@
 	</xsl:template>
 	
 	<!-- longquoteref was removed, pass attributes to parent lq -->
-	<xsl:template match="longquoteref">
-		<xsl:message>The element 'longquoteref' is removed in the DITA 2.0 standard.</xsl:message>
-	</xsl:template>
 	<xsl:template match="lq[longquoteref]">
 		<xsl:copy>
 			<xsl:apply-templates select="@*"/>
@@ -298,16 +271,9 @@
 		</xsl:copy>
 	</xsl:template>
 	
-	<!-- Attribute was removed -->
-	<xsl:template match="hazardsymbol/@longdescref">
-		<xsl:message>The element 'longdescref' is removed in the DITA 2.0 standard.</xsl:message>
-	</xsl:template>
-	
-	<xsl:template match="@mapkeyref">
-		<xsl:message>The attribute 'mapkeyref' is removed in the DITA 2.0 standard.</xsl:message>
-	</xsl:template>
-	
-	<xsl:template match="link/@query">
-		<xsl:message>The attribute 'query' is removed in the DITA 2.0 standard.</xsl:message>
+	<xsl:template match="node() | @*">
+		<xsl:copy>
+			<xsl:apply-templates select="node() | @*"/>
+		</xsl:copy>
 	</xsl:template>
 </xsl:stylesheet>
