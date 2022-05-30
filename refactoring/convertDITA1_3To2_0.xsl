@@ -183,11 +183,14 @@
 	<!-- Removed in DITA 2.0, try to convert to delivery target. -->
 	<xsl:template match="@print">
 		<xsl:choose>
-			<xsl:when test=".='yes'">
-				<xsl:attribute name="deliveryTarget" select="'pdf'"/>
+			<xsl:when test=".='no'">
+				<xsl:attribute name="deliveryTarget" select="'not-in-pdf'"/>
 			</xsl:when>
+		  <xsl:when test=".='printonly'">
+		    <xsl:attribute name="deliveryTarget" select="'pdf'"/>
+		  </xsl:when>
 			<xsl:otherwise>
-				<xsl:attribute name="deliveryTarget" select="'html5'"/>
+			  <!-- Ignore print=yes attribute/value pair. -->
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
